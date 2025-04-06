@@ -10,15 +10,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Image, Video, UploadCloud, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-// Sample media data
+// Sample media data with explicitly typed 'type' property
 const sampleImages = [
-  { id: 1, title: "Sunday Worship", type: "image", url: "https://images.unsplash.com/photo-1473177104440-ffee2f376098", category: "Worship", description: "Sunday morning gathering" },
-  { id: 2, title: "Youth Group", type: "image", url: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81", category: "Youth", description: "Weekly youth meeting" }
+  { id: 1, title: "Sunday Worship", type: "image" as const, url: "https://images.unsplash.com/photo-1473177104440-ffee2f376098", category: "Worship", description: "Sunday morning gathering" },
+  { id: 2, title: "Youth Group", type: "image" as const, url: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81", category: "Youth", description: "Weekly youth meeting" }
 ];
 
 const sampleVideos = [
-  { id: 1, title: "Easter Service", type: "video", url: "https://example.com/video1.mp4", category: "Special Events", description: "Recording of our Easter celebration" },
-  { id: 2, title: "Sermon: Grace and Truth", type: "video", url: "https://example.com/video2.mp4", category: "Sermons", description: "Pastor's message from John 1" }
+  { id: 1, title: "Easter Service", type: "video" as const, url: "https://example.com/video1.mp4", category: "Special Events", description: "Recording of our Easter celebration" },
+  { id: 2, title: "Sermon: Grace and Truth", type: "video" as const, url: "https://example.com/video2.mp4", category: "Sermons", description: "Pastor's message from John 1" }
 ];
 
 interface Media {
