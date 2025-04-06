@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 
 // In a real application, this would be handled securely with a backend
 // This is just a simple implementation for demo purposes
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "church123";
+const ADMIN_USERNAME = "pastor";
+const ADMIN_PASSWORD = "pastor@12";
 
 interface AdminAuth {
   isAuthenticated: boolean;
