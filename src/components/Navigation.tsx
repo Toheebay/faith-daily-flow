@@ -1,131 +1,114 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Book, Calendar, MessageSquare, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { useMobile } from '@/hooks/use-mobile';
 
 const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useMobile();
   
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   return (
-    <header className="bg-white shadow-md">
-      <div className="section-container flex justify-between items-center py-4">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="h-10 w-10 bg-church-red rounded-full flex items-center justify-center">
-            <span className="text-white font-serif font-bold">FC</span>
+    <header className="bg-white shadow-sm sticky top-0 z-50">
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center">
+            <div className="w-10 h-10 rounded-full bg-church-red flex items-center justify-center text-white font-serif text-xl">
+              F
+            </div>
+            <span className="ml-3 text-xl font-serif text-church-red hidden sm:block">Faith Church</span>
+          </Link>
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            <Link to="/" className="text-gray-700 hover:text-church-red transition-colors">
+              Home
+            </Link>
+            <Link to="/bible-study" className="text-gray-700 hover:text-church-red transition-colors">
+              Bible Study
+            </Link>
+            <Link to="/calendar" className="text-gray-700 hover:text-church-red transition-colors">
+              Calendar
+            </Link>
+            <Link to="/contact" className="text-gray-700 hover:text-church-red transition-colors">
+              Contact
+            </Link>
+            <Link to="/admin" className="text-gray-700 hover:text-church-red transition-colors">
+              Admin
+            </Link>
+            <Button size="sm" className="bg-church-red hover:bg-church-red-light ml-2">
+              <Link to="/contact" className="text-white">
+                Join Us
+              </Link>
+            </Button>
+          </nav>
+          
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-gray-700"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+        
+        {/* Mobile Navigation */}
+        {menuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-100">
+            <nav className="flex flex-col space-y-4 pb-4">
+              <Link 
+                to="/" 
+                className="text-gray-700 hover:text-church-red transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/bible-study" 
+                className="text-gray-700 hover:text-church-red transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Bible Study
+              </Link>
+              <Link 
+                to="/calendar" 
+                className="text-gray-700 hover:text-church-red transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Calendar
+              </Link>
+              <Link 
+                to="/contact" 
+                className="text-gray-700 hover:text-church-red transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Contact
+              </Link>
+              <Link 
+                to="/admin" 
+                className="text-gray-700 hover:text-church-red transition-colors"
+                onClick={() => setMenuOpen(false)}
+              >
+                Admin
+              </Link>
+              <Button className="bg-church-red hover:bg-church-red-light w-full mt-2">
+                <Link 
+                  to="/contact" 
+                  className="text-white block w-full"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Join Us
+                </Link>
+              </Button>
+            </nav>
           </div>
-          <h1 className="text-xl md:text-2xl font-bold text-church-red">Faith Church</h1>
-        </Link>
-        
-        <div className="hidden md:flex items-center gap-6">
-          <NavLinks />
-          <Button className="bg-church-red hover:bg-church-red-light">
-            Donate
-          </Button>
-        </div>
-        
-        <button 
-          className="md:hidden text-church-red"
-          onClick={toggleMenu}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-      
-      <div className={cn(
-        "md:hidden transition-all duration-300 ease-in-out overflow-hidden",
-        isMenuOpen ? "max-h-60" : "max-h-0"
-      )}>
-        <div className="px-4 py-2 flex flex-col gap-2">
-          <MobileNavLinks onClick={() => setIsMenuOpen(false)} />
-          <Button className="bg-church-red hover:bg-church-red-light w-full">
-            Donate
-          </Button>
-        </div>
+        )}
       </div>
     </header>
   );
 };
-
-const NavLinks = () => (
-  <nav>
-    <ul className="flex gap-6 items-center">
-      <li>
-        <Link to="/" className="flex items-center gap-1 text-church-red hover:text-church-red-light">
-          Home
-        </Link>
-      </li>
-      <li>
-        <Link to="/bible-study" className="flex items-center gap-1 text-church-red hover:text-church-red-light">
-          <Book size={18} />
-          Bible Study
-        </Link>
-      </li>
-      <li>
-        <Link to="/calendar" className="flex items-center gap-1 text-church-red hover:text-church-red-light">
-          <Calendar size={18} />
-          Calendar
-        </Link>
-      </li>
-      <li>
-        <Link to="/contact" className="flex items-center gap-1 text-church-red hover:text-church-red-light">
-          <MessageSquare size={18} />
-          Contact
-        </Link>
-      </li>
-    </ul>
-  </nav>
-);
-
-const MobileNavLinks = ({ onClick }: { onClick: () => void }) => (
-  <nav>
-    <ul className="flex flex-col gap-3">
-      <li>
-        <Link 
-          to="/" 
-          className="block py-2 text-church-red hover:bg-church-green rounded px-2"
-          onClick={onClick}
-        >
-          Home
-        </Link>
-      </li>
-      <li>
-        <Link 
-          to="/bible-study" 
-          className="block py-2 text-church-red hover:bg-church-green rounded px-2 flex items-center gap-2"
-          onClick={onClick}
-        >
-          <Book size={18} />
-          Bible Study
-        </Link>
-      </li>
-      <li>
-        <Link 
-          to="/calendar" 
-          className="block py-2 text-church-red hover:bg-church-green rounded px-2 flex items-center gap-2"
-          onClick={onClick}
-        >
-          <Calendar size={18} />
-          Calendar
-        </Link>
-      </li>
-      <li>
-        <Link 
-          to="/contact" 
-          className="block py-2 text-church-red hover:bg-church-green rounded px-2 flex items-center gap-2"
-          onClick={onClick}
-        >
-          <MessageSquare size={18} />
-          Contact
-        </Link>
-      </li>
-    </ul>
-  </nav>
-);
 
 export default Navigation;

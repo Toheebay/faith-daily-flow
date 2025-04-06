@@ -3,6 +3,7 @@ import React from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import BibleStudyCard from '@/components/BibleStudyCard';
+import MediaGallery from '@/components/MediaGallery';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
@@ -132,31 +133,41 @@ const BibleStudy = () => {
           </div>
         </section>
         
-        {/* Bible Studies Section */}
-        <section className="section-container py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {bibleStudies.map(study => (
-              <BibleStudyCard 
-                key={study.id}
-                title={study.title}
-                description={study.description}
-                date={study.date}
-                time={study.time}
-                leader={study.leader}
-                location={study.location}
-                category={study.category}
-                featured={study.featured}
-              />
-            ))}
+        <div className="section-container py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Bible Studies Section - Takes 2/3 of the space on large screens */}
+            <div className="lg:col-span-2">
+              <h2 className="text-2xl font-serif text-church-red mb-6">Available Studies</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {bibleStudies.map(study => (
+                  <BibleStudyCard 
+                    key={study.id}
+                    title={study.title}
+                    description={study.description}
+                    date={study.date}
+                    time={study.time}
+                    leader={study.leader}
+                    location={study.location}
+                    category={study.category}
+                    featured={study.featured}
+                  />
+                ))}
+              </div>
+              
+              <div className="mt-12 text-center">
+                <p className="mb-4 text-gray-700">Don't see a study that fits your schedule?</p>
+                <Button className="bg-church-red hover:bg-church-red-light">
+                  Request a New Bible Study
+                </Button>
+              </div>
+            </div>
+            
+            {/* Media Gallery - Takes 1/3 of the space on large screens */}
+            <div className="mt-12 lg:mt-0">
+              <MediaGallery />
+            </div>
           </div>
-          
-          <div className="mt-12 text-center">
-            <p className="mb-4 text-gray-700">Don't see a study that fits your schedule?</p>
-            <Button className="bg-church-red hover:bg-church-red-light">
-              Request a New Bible Study
-            </Button>
-          </div>
-        </section>
+        </div>
         
         {/* Resources Section */}
         <section className="bg-white py-12">

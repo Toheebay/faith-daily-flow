@@ -9,6 +9,7 @@ import BibleStudy from "./pages/BibleStudy";
 import Calendar from "./pages/Calendar";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/bible-study" element={<BibleStudy />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
