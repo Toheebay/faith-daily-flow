@@ -5,12 +5,50 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import BibleStudyManager from '@/components/admin/BibleStudyManager';
 import MediaManager from '@/components/admin/MediaManager';
+import AdminLogin from '@/components/admin/AdminLogin';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, LogOut } from 'lucide-react';
+import { useAdminAuth } from '@/hooks/use-admin-auth';
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState<string>("bible-studies");
+  const { isAuthenticated, login, logout } = useAdminAuth();
+  
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navigation />
+        
+        <main>
+          {/* Admin Header */}
+          <section className="bg-church-red text-white py-8">
+            <div className="section-container">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <h1 className="text-3xl md:text-4xl font-serif text-white">Admin Dashboard</h1>
+                <Button asChild variant="outline" className="bg-white hover:bg-church-cream text-church-red">
+                  <Link to="/" className="flex items-center gap-2">
+                    <ArrowLeft size={16} />
+                    Back to Website
+                  </Link>
+                </Button>
+              </div>
+              <p className="mt-2 text-church-cream">
+                Manage bible studies, upload media, and administer church content.
+              </p>
+            </div>
+          </section>
+          
+          {/* Login Form */}
+          <section className="section-container py-8">
+            <AdminLogin onLogin={login} />
+          </section>
+        </main>
+        
+        <Footer />
+      </div>
+    );
+  }
   
   return (
     <div className="min-h-screen flex flex-col">
@@ -22,12 +60,22 @@ const Admin = () => {
           <div className="section-container">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <h1 className="text-3xl md:text-4xl font-serif text-white">Admin Dashboard</h1>
-              <Button asChild variant="outline" className="bg-white hover:bg-church-cream text-church-red">
-                <Link to="/" className="flex items-center gap-2">
-                  <ArrowLeft size={16} />
-                  Back to Website
-                </Link>
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  className="bg-white hover:bg-church-cream text-church-red"
+                  onClick={logout}
+                >
+                  <LogOut size={16} className="mr-2" />
+                  Logout
+                </Button>
+                <Button asChild variant="outline" className="bg-white hover:bg-church-cream text-church-red">
+                  <Link to="/" className="flex items-center gap-2">
+                    <ArrowLeft size={16} />
+                    Back to Website
+                  </Link>
+                </Button>
+              </div>
             </div>
             <p className="mt-2 text-church-cream">
               Manage bible studies, upload media, and administer church content.
